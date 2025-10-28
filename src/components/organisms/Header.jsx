@@ -93,9 +93,9 @@ const Header = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <NavLink
+<NavLink
                       to={item.path}
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={() => setIsMobileMenuOpen(false)}
                       className={({ isActive }) =>
                         cn(
                           "flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200",
@@ -131,12 +131,8 @@ const Header = () => {
               </nav>
             </motion.div>
           )}
-        </AnimatePresence>
+</AnimatePresence>
       </div>
-<NavLink
-                      to={item.path}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={({ isActive }) =>
     </header>
   )
 }
