@@ -1,12 +1,14 @@
-import { useState } from "react"
-import { NavLink } from "react-router-dom"
-import { motion, AnimatePresence } from "framer-motion"
-import ApperIcon from "@/components/ApperIcon"
-import Button from "@/components/atoms/Button"
-import { cn } from "@/utils/cn"
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { useAuth } from "@/layouts/Root";
+import ApperIcon from "@/components/ApperIcon";
+import Button from "@/components/atoms/Button";
+import { cn } from "@/utils/cn";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { logout } = useAuth()
 
   const navigationItems = [
     { name: "Dashboard", path: "/", icon: "LayoutDashboard" },
@@ -63,27 +65,27 @@ const Header = () => {
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
+{/* Mobile Menu Button */}
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2"
           >
-            <ApperIcon name={isMenuOpen ? "X" : "Menu"} className="w-5 h-5" />
+            <ApperIcon name={isMobileMenuOpen ? "X" : "Menu"} className="w-5 h-5" />
           </Button>
         </div>
 
-        {/* Mobile Navigation */}
+{/* Mobile Navigation */}
         <AnimatePresence>
-          {isMenuOpen && (
+          {isMobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden border-t border-gray-200 bg-white"
             >
-              <nav className="py-4 space-y-1">
+<nav className="py-4 space-y-1">
                 {navigationItems.map((item, index) => (
                   <motion.div
                     key={item.name}
@@ -112,11 +114,18 @@ const Header = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="pt-2"
+                  className="pt-2 space-y-2"
                 >
                   <Button className="w-full mx-4">
                     <ApperIcon name="Plus" className="w-4 h-4 mr-2" />
                     Quick Add
+                  </Button>
+                  <Button 
+                    onClick={logout}
+                    className="w-full mx-4 bg-red-600 hover:bg-red-700"
+                  >
+                    <ApperIcon name="LogOut" className="w-4 h-4 mr-2" />
+                    Logout
                   </Button>
                 </motion.div>
               </nav>
@@ -124,6 +133,10 @@ const Header = () => {
           )}
         </AnimatePresence>
       </div>
+<NavLink
+                      to={item.path}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={({ isActive }) =>
     </header>
   )
 }
